@@ -55,23 +55,42 @@ var removeNote = (title) => {
 };
 
 
+
+// log a note
+var logNote = (note) => {
+	console.log('------');
+	debugger;
+	console.log(note.title);
+	console.log(note.body);
+};
+
+
+
 //get One specific note
 var getNote = (title) => {
 	//fetch notes
-	console.log('hey');
 	var notes = fetchNote('./notes.json');
 
 	//filter notes
+
 	var note = notes.filter(x => x.title === title);
 
+	/*var index = notes.forEach(x => { 
+		if(x.title === title) return notes.indexOf(x);
+	});*/
+
 	//console.log the note we're looking for :)
-	console.log(`title: ${note.title}`);
-	console.log(`${note.body}`);
+	logNote(note[0]);
 };
 
 // get all notes
 var getAll = () => {
 	console.log('getting all the notes');
+	var notes = fetchNote('./notes.json');
+	notes.forEach(x => {
+		console.log(`Note ${notes.indexOf(x)}:`);
+		logNote(x);
+	});
 };
 
 
@@ -79,5 +98,6 @@ var getAll = () => {
 module.exports = {
 	addNewNote,
 	getAll,
-	removeNote
+	removeNote,
+	getNote
 };

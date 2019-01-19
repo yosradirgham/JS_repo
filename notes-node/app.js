@@ -2,7 +2,35 @@ console.log(`-------------------------------------starting app.js---------------
 
 const fs   = require('fs');
 const _    = require('lodash');
-const argv = require('yargs').argv;// pare command line arguments
+
+const titleOptions = {
+	describe :'Title of the note',
+	demand : true, //	the title is required 
+	alias : 't'
+};
+
+const bodyOptions ={
+	describe : 'The content of the note',
+	demand : true,
+	alias : 'b'
+};
+
+console.log(`process object:`,process.argv);
+
+const argv = require('yargs') //	parse command line arguments
+			.command('add','add a new note',{
+				title : titleOptions,
+				body : bodyOptions
+			})
+			.command('remove','delete an existing note',{
+				title : titleOptions
+			})
+			.command('list','prints all the notes')
+			.command('read','get a specific note',{
+				title : titleOptions
+			})
+			.help()
+			.argv;
 
 const notes = require('./notes.js')
 
@@ -25,10 +53,9 @@ if(command === 'add'){
 
 	notes.removeNote(argv.title);
 
-}else if(command === 'getNote'){
-	console.log('a fine');
-	
-	notes.getNote(argv[3]);
+}else if(command === 'read'){
+
+	notes.getNote(argv.title);
 
 }
 else if(command === 'read'){
