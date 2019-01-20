@@ -9,6 +9,7 @@ const argv  = require('yargs') //parses process.argv which will fetch arguments 
 
 // variables
 const command = argv._[0];
+let note;
 
 
 //MVP
@@ -23,7 +24,12 @@ if(command === 'add'){
 
 }else if(command === 'read'){
 
-	console.log('read a note');
+	note = notes.readNote(argv.title);
+	try{
+		notes.displayNote(note);
+	}catch(err){
+		console.log('not does not exist');
+	}
 
 }else if(command === 'remove'){
 

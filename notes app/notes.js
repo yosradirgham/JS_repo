@@ -2,16 +2,28 @@ console.log('----------------------starting notes.js-----------------------');
 
 const fs = require('fs');
 
-var addNote = (title, body) => {
-	let notes = [],noteStringified, noteParsed, noteExistsArr =[];
+var displayNote = (note) => {
+	console.log('----');
+	console.log(note.title);
+	console.log(note.body);
+};
 
-	// 1. fetch existing notes
+var readJasonFile = () => {
+	let notes = [];
 	try{
 		notes = JSON.parse(fs.readFileSync('./notes.json'));
 	}catch(err){
 		console.log(err);
+		console.log('file does not exist');
 	}
+	return notes;
+};
 
+var addNote = (title, body) => {
+	let notes ,noteStringified, noteParsed, noteExistsArr =[];
+
+	// 1. fetch existing notes
+		notes = readJasonFile();
 	// 2. Create a note data structure that will hold the note
 	let note = {
 		title,
@@ -28,9 +40,19 @@ var addNote = (title, body) => {
 
 };
 
-var readNote = () => {};
+var readNote = (title) => {
+	let notes, note;
+	notes = readJasonFile();
+	note = notes.filter(x => x.title === title);
+	debugger;
+	if(note.length === 1 ){
+		return note[0];
+	} 
+};
 
-var removeNote = () => {};
+var removeNote = (title) => {
+	let notes;
+};
 
 var listNotes = () => {};
 
@@ -40,5 +62,6 @@ module.exports = {
 	addNote,
 	readNote,
 	removeNote,
-	listNotes
+	listNotes,
+	displayNote
 };
