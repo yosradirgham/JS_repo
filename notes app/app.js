@@ -1,5 +1,12 @@
 console.log('-------------------starting app.js------------------');
 
+
+//random ideas
+//what can u do to improve yr day?
+//vote ...
+//measure performance <3
+
+
 // node files
 const notes = require('./notes.js');
 
@@ -28,16 +35,16 @@ if(command === 'add'){
 	try{
 		notes.displayNote(note);
 	}catch(err){
-		console.log('not does not exist');
+		console.log('note does not exist');
 	}
 
 }else if(command === 'remove'){
 
-	console.log('remove a note');
+	notes.removeNote(argv.title);
 
 }else if(command === 'list'){
 
-	console.log('list all notes');
+	notes.getNotes();
 
 }else{
 

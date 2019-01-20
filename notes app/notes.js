@@ -19,6 +19,12 @@ var readJasonFile = () => {
 	return notes;
 };
 
+var writeInJsonFile = (notes) => {
+	let noteStringified = JSON.stringify(notes);
+	fs.writeFileSync('./notes.json',noteStringified);
+};
+
+
 var addNote = (title, body) => {
 	let notes ,noteStringified, noteParsed, noteExistsArr =[];
 
@@ -35,9 +41,7 @@ var addNote = (title, body) => {
 	noteExistsArr.length === 0 ? notes.push(note) : 'note already exists' ;
 
 	// 4. store the note inside of a json file
-	noteStringified = JSON.stringify(notes);
-	fs.writeFileSync('./notes.json',noteStringified);
-
+	writeInJsonFile(notes);
 };
 
 var readNote = (title) => {
@@ -51,10 +55,19 @@ var readNote = (title) => {
 };
 
 var removeNote = (title) => {
-	let notes;
+	let notes = readJasonFile();
+	let n = notes.length;
+	notes.forEach(x => {
+		if(x.title === title) notes.splice(notes.indexOf(x),1);
+	});
+	if(n-1 === notes.length) console.log('note has been successfully removed');
+	writeInJsonFile(notes);
 };
 
-var listNotes = () => {};
+var getNotes = () => {
+	let notes = readJasonFile();
+	notes.forEach(x => displayNote(x));
+};
 
 
 
@@ -62,6 +75,6 @@ module.exports = {
 	addNote,
 	readNote,
 	removeNote,
-	listNotes,
+	getNotes,
 	displayNote
 };
