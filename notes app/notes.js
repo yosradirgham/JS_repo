@@ -30,7 +30,7 @@ var addNote = (title, body) => {
 		body
 	};
 
-	// 3. store the note in a note array if the title does not already exist 
+	// 3. store the note in a notes array if the title does not already exist 
 	noteExistsArr = notes.filter(x => x.title === title);
 	noteExistsArr.length === 0 ? notes.push(note) : 'note already exists' ;
 
