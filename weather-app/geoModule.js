@@ -30,9 +30,7 @@ var geoCodeAddress = (arg) => {
 		}
 	});
 
-} 
-
-
+}; 
 
 
 module.exports={
