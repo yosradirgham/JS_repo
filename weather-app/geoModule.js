@@ -12,7 +12,7 @@ var geoCodeAddress = (arg, callback) => {
 	},(error, response, body)=>{
 		if(error){
 	
-			callback(`unable to connect to google's servers`);
+			callback(`unable to connect to google's servers`, undefined);
 	
 		}else if(response.statusCode === 200){
 	
