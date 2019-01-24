@@ -24,7 +24,8 @@ geoModule.geoCodeAddress(argv.a, (errorMessage, results) => {
 	else console.log(results);
 });
 
-weatherModule.getWeather(undefined, undefined,(errorMessage, results)=>{
+
+weatherModule.getWeather(39.944267,-75.163609,(errorMessage, results)=>{
 	if(errorMessage) console.log(errorMessage);
 	else console.log(results);
 });
