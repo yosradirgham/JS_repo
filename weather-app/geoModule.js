@@ -2,6 +2,7 @@ console.log('----------------------------starting geoModule.js------------------
 
 const request = require('request');
 
+
 var geoCodeAddress = (arg, callback) => {
 
 	let address = encodeURIComponent(arg);
@@ -14,7 +15,7 @@ var geoCodeAddress = (arg, callback) => {
 	
 			callback(`unable to connect to google's servers`, undefined);
 	
-		}else if(response.statusCode === 200){
+		}else if(!error && response.statusCode === 200){
 	
 			body = JSON.parse(body, undefined, 2);
 			callback(undefined, {
