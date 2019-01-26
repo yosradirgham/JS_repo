@@ -21,11 +21,14 @@ let argv = yargs
 
 geoModule.geoCodeAddress(argv.a, (errorMessage, results) => {
 	if(errorMessage) console.log(errorMessage);
-	else console.log(results);	
-});
-
-
-weatherModule.getWeather(39.944267,-75.163609,(errorMessage, results)=>{
-	if(errorMessage) console.log(errorMessage);
-	else console.log(results);
+	else{
+		console.log(results);	
+		weatherModule.getWeather(results.latitude,results.longitude,(errorMessage, weatherResults)=>{
+			if(errorMessage) console.log(errorMessage);
+			else{
+				console.log(weatherResults);		
+				console.log(`It's currently ${weatherResults.temperature} \nIt feels like ${weatherResults.actualTemp}`);
+			}
+		});
+	}
 });

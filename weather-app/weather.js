@@ -13,7 +13,9 @@ var getWeather = (latitude, longitude, callback)=> {
 			body = JSON.parse(body);
 			callback(undefined,{
 				weather : body.currently.summary,
-				temperature : body.currently.temperature
+				temperature : body.currently.temperature,
+				//the catual temperature
+				actualTemp : body.currently.apparentTemperature
 			});		
 		}
 	});

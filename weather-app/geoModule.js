@@ -19,18 +19,16 @@ var geoCodeAddress = (arg, callback) => {
 	
 			body = JSON.parse(body, undefined, 2);
 			callback(undefined, {
+				//address : body.results[0].formatted_address,
 				latitude: body.results[0].locations[0].displayLatLng.lat,
-				longitude: body.results[0].locations[0].displayLatLng.lng,
-				status: response.statusCode	
+				longitude: body.results[0].locations[0].displayLatLng.lng
 			});			
-
 		}else{
 	
 			console.log('unable to find that address');
 	
 		}
 	});
-
 }; 
 
 
