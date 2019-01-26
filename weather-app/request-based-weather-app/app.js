@@ -17,21 +17,6 @@ let argv = yargs
 	.help()
 	.argv;
 
-//address is the second arg in argv: argv.a
-
-// geoModule.geoCodeAddress(argv.a, (errorMessage, results) => {
-// 	if(errorMessage) console.log(errorMessage);
-// 	else{
-// 		console.log(results);	
-// 		weatherModule.getWeather(results.latitude,results.longitude,(errorMessage, weatherResults)=>{
-// 			if(errorMessage) console.log(errorMessage);
-// 			else{
-// 				console.log(weatherResults);		
-// 				console.log(`It's currently ${weatherResults.temperature} \nIt feels like ${weatherResults.actualTemp}`);
-// 			}
-// 		});
-// 	}
-// });
 
 geoModule.getGeoCode(argv.a)
 .then(message =>{
