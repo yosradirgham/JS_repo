@@ -36,6 +36,10 @@ let argv = yargs
 geoModule.getGeoCode(argv.a)
 .then(message =>{
 	console.log('the message: ',message);
+	return weatherModule.getWeather(message.latitude, message.longitude);
+})
+.then(msg => {
+	console.log(msg);
 })
 .catch(error =>{
 	console.log(error);
