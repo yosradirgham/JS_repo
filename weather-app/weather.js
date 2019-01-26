@@ -22,6 +22,6 @@ var getWeather = (latitude, longitude, callback)=> {
 };
 
 
-module.exports = {
+module.exports= {
 	getWeather
 }
