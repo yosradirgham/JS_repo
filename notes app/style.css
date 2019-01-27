@@ -24,10 +24,12 @@ body {
 /*  line-height: 1.5em;*/
 }
 
-p::before{
+p::after{
     content: 'Hello world!';
     font-size : 100px;
-    text-align : center;
+    /*text-align : center;*/
+    position : relative;
+    height : 500px;
 }
 
 
