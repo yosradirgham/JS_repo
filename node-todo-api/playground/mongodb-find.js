@@ -11,7 +11,7 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp',(err,client)=>{
   .catch(err => console.log(err));
 
 
-// Now we will query by _id
+// query db by _id
   db.collection('Todos').find({
     _id : new ObjectID('5c66781ca341890335feff73')
   }).toArray()

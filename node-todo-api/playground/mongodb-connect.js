@@ -9,8 +9,8 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp',(err,client)=>{
 
 	//	Todos collection
 	db.collection('Todos').insertOne(({
-		text:'Walk the dog',
-		completed : true
+		text:'Complete this course',
+		completed : false
 	}),(err,result)=>{
 
 		if(err) return console.log(`Unable to insert new doc in Todos collection:\n${err}`);
@@ -19,6 +19,38 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp',(err,client)=>{
 
 	});
 
+	db.collection('Todos').insertOne(({
+		text:'Do the grocery',
+		completed : false
+	}),(err,result)=>{
+
+		if(err) return console.log(`Unable to insert new doc in Todos collection:\n${err}`);
+
+		console.log(result.ops);
+
+	});
+
+	db.collection('Todos').insertOne(({
+		text:'read a book <3',
+		completed : false
+	}),(err,result)=>{
+
+		if(err) return console.log(`Unable to insert new doc in Todos collection:\n${err}`);
+
+		console.log(result.ops);
+
+	});
+
+	db.collection('Todos').insertOne(({
+		text:'Go to the gym',
+		completed : false
+	}),(err,result)=>{
+
+		if(err) return console.log(`Unable to insert new doc in Todos collection:\n${err}`);
+
+		console.log(result.ops);
+
+	});
 	//	Users collection
 	db.collection('Users').insertOne(({
 
