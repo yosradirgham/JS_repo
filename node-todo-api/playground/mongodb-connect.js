@@ -9,8 +9,8 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp',(err,client)=>{
 
 	//	Todos collection
 	db.collection('Todos').insertOne(({
-		text:'Something to do',
-		completed : false
+		text:'Walk the dog',
+		completed : true
 	}),(err,result)=>{
 
 		if(err) return console.log(`Unable to insert new doc in Todos collection:\n${err}`);
