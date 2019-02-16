@@ -1,7 +1,7 @@
 //Todo rest API
 
 const express    = require('express');
-const bodyParser = require('body-parser');//parses json and converts it into a JS obj
+const bodyParser = require('body-parser');
 
 const {mongoose} = require('./db/mongoose')
 var {Todo} = require('./models/todo');
@@ -10,8 +10,7 @@ var {User} = require('./models/user');
 var app = express();
 
 // Middlewares configuration
-app.use(bodyParser.json());// With this in place we can send json to the server
-//the body will get stored by body-parser <3
+app.use(bodyParser.json());
 
 // Data manipulation
 app.post('/todos',(req,res,err)=>{
@@ -33,3 +32,5 @@ app.post('/users',(req,res,err)=>{
 app.listen(3000,()=>{
   console.log('Started on port 3000');
 });
+
+module.exports.app = app;
