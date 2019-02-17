@@ -24,8 +24,10 @@ app.post('/todos',(req,res,err)=>{
   .catch(e => console.log(`Unable to add todo:\n${res.status(400).send(e)}`));
 });
 
-app.post('/users',(req,res,err)=>{
-
+app.get('/todos',(req,res,err)=>{
+  Todo.find()
+  .then(docs => res.send({docs}))
+  .catch(e => console.log(e));
 });
 
 
