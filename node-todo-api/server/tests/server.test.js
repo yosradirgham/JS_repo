@@ -6,10 +6,18 @@ const {app} = require('./../server');
 const {mongoose} = require('../db/mongoose');
 const {Todo} = require('./../models/todo');
 
+var todos = [{
+  text : 'walk the dog'
+}, {
+  text : 'read a book'
+},{
+  text : 'Finish this course'
+}];
 
-beforeEach((done)=>{
+beforeEach(done => {
   Todo.remove({})
-  .then(()=>done());
+  .then(()=> Todo.insertMany(todos))
+  .then(()=> done());
 });
 
 
@@ -28,8 +36,8 @@ describe('Post /todos',()=>{
       .end((err,res)=>{
         if(err) return done(err);
         Todo.find().then(todos => {
-          expect(todos.length).toBe(1);
-          expect(todos[0].text).toBe(text);
+          expect(todos.length).toBe(4);
+          expect(todos[3].text).toBe(text);
           done();
         }).catch(e =>{
           done(e);
@@ -49,7 +57,7 @@ describe('Post /todos',()=>{
         if(err) return done(err);
         Todo.find().then(todos =>{
           console.log(todos.length);
-          expect(todos.length).toBe(0);
+          expect(todos.length).toBe(3);
           done();
         }).catch(e=>{
           done(e);
@@ -58,5 +66,27 @@ describe('Post /todos',()=>{
     });
   });
 
+describe('GET /todos',()=>{
+
+  it('Should get a list of todos',(done)=>{
+    request(app)
+    .get('/todos')
+    .expect(200)
+    .expect(res => {
+      expect(res.body.docs.length).toBe(3);
+    })
+    .end((err,res)=>{
+      if(err) return done(err);
+      Todo.find()
+      .then( docs => {
+        expect(docs.length).toBe(3);
+        expect(docs[0].text).toBe('walk the dog');
+        done();
+      }).catch(e =>
+        done(e));
+    });
+  });
+
+});
 
 });
