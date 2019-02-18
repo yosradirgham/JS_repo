@@ -1,16 +1,18 @@
 const expect    = require('expect');
 const request = require('supertest');
-
 const {app} = require('./../server');
-
 const {mongoose} = require('../db/mongoose');
 const {Todo} = require('./../models/todo');
+const {ObjectID} = require('mongodb');
 
 var todos = [{
+  _id : new ObjectID("5c6a69206f445b021b441cd1"),
   text : 'walk the dog'
 }, {
+  _id : new ObjectID("5c6a69206f445b021b441cd2"),
   text : 'read a book'
 },{
+  _id : new ObjectID("5c6a69206f445b021b441cd3"),
   text : 'Finish this course'
 }];
 
@@ -22,8 +24,6 @@ beforeEach(done => {
 
 
 describe('Post /todos',()=>{
-
-  describe('todo created',()=>{
     it('Should create a new todo',(done)=>{
       var text = 'Finish this course';
       request(app)
@@ -39,54 +39,60 @@ describe('Post /todos',()=>{
           expect(todos.length).toBe(4);
           expect(todos[3].text).toBe(text);
           done();
-        }).catch(e =>{
-          done(e);
-        });
+        }).catch(e => done(e));
       });
     });
-  });
 
-  describe('correct data sent',()=>{
     it('Should not create todo with invalid body data',(done)=>{
-
       request(app)
       .post('/todos')
       .send({})
       .expect(400)
       .end((err,res)=>{
         if(err) return done(err);
-        Todo.find().then(todos =>{
-          console.log(todos.length);
+        Todo.find().then(todos => {
           expect(todos.length).toBe(3);
           done();
-        }).catch(e=>{
-          done(e);
-        });
+        }).catch(e => done(e));
       });
     });
-  });
+});
 
 describe('GET /todos',()=>{
-
   it('Should get a list of todos',(done)=>{
     request(app)
     .get('/todos')
     .expect(200)
-    .expect(res => {
-      expect(res.body.docs.length).toBe(3);
-    })
+    .expect(res => expect(res.body.length).toBe(3))
     .end((err,res)=>{
       if(err) return done(err);
-      Todo.find()
-      .then( docs => {
+      Todo.find().then( docs => {
         expect(docs.length).toBe(3);
         expect(docs[0].text).toBe('walk the dog');
         done();
-      }).catch(e =>
-        done(e));
+      }).catch(e => done(e));
     });
   });
-
 });
 
+describe('GET /todos/:id',()=>{
+  it('Should get a todo by Id',(done)=>{
+    request(app)
+    .get(`/todos/${todos[0]._id.toHexString()}`)
+    .expect(200)
+    .expect(res => expect(res.body.doc.text).toBe('walk the dog'))
+    .end(done);
+  });
+  it('Should return 404 when Id is not valid',(done)=>{
+    request(app)
+    .get(`/todos/${todos[0]._id.toHexString()}1`)
+    .expect(404)
+    .end(done);
+  });
+  it('Should get 404 http status code when ID is valid but does not exist',(done)=>{
+    request(app)
+    .get(`/todos/5c6a69206f445b021b441cd4`)
+    .expect(404)
+    .end(done);
+  });
 });
