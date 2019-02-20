@@ -45,6 +45,25 @@ app.get('/todos/:id',(req,res,err)=>{
   });
 });
 
+// The route to delete a // TODO:
+app.delete('/todos/:id',(req,res,err)=>{
+  // get the Id
+  let _id = req.params.id;
+
+  // Validate the Id -> not valid? return error 404
+  if(!ObjectID.isValid(_id)) return res.status(404).send('<h1>404 - Invalid Id</h1>');
+
+  // remove todo by Id :
+  Todo.findByIdAndRemove(_id)//we can have a //success
+  .then(doc => {
+    if(!doc) return res.status(404).send('<h1>404 - document does not exist</h1>'); //if doc does not exit send 404, if doc exist delete and send it back with a 200
+    res.status(200).send(doc);
+  })      //error
+  .catch(e => {
+    res.status(400).send(); //we can here send a 400 with an empty body
+  });
+});
+
 
 app.listen(port,()=>{
   console.log(`Started on port ${port}`);
