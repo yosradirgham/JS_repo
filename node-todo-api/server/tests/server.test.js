@@ -13,7 +13,9 @@ var todos = [{
   text : 'read a book'
 },{
   _id : new ObjectID("5c6a69206f445b021b441cd3"),
-  text : 'Finish this course'
+  text : 'Finish this course',
+  completed:true,
+  completedAt:123
 }];
 
 beforeEach(done => {
@@ -124,5 +126,26 @@ describe('Delete /todos/:id',()=>{
     .delete('/todos/5c6a69206f445b021b441cd9')
     .expect(404)
     .end(done);
+  });
+});
+
+
+describe('PATCH /todos/:id',()=>{
+  it('should update todo',(done)=>{
+    var text = 'this should be the new test';
+    var id = todos[0]._id.toHexString();
+    request(app)
+    .patch(`/todos/${id}`)
+    .send({text},{completed : true})
+    .expect(200)
+    .expect(res => expect(res.body.todo.text).toBe('this should be the new test'))
+    .end((err,res)=>{
+      if(err) return done(err);
+      Todo.findById('5c6a69206f445b021b441cd1')
+      .then(todo => {
+        expect(todo.text).toBe('this should be the new test');
+        done();
+      }).catch(e => done(e));
+    });
   });
 });

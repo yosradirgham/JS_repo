@@ -60,15 +60,12 @@ app.delete('/todos/:id',(req,res)=>{
 app.patch('/todos/:id',(req,res)=>{
   let id = req.params.id;
   let body = _.pick(req.body,['text','completed']);
-
   if(!ObjectID.isValid(id)) return res.send(404).send('<h1>404 - Page Not Found</h1>');
-
   if(_.isBoolean(body.completed) && body.completed) body.completedAt = new Date().toString();
   else{
     body.completed = false;
     body.completedAt = null;
   }
-
   Todo.findByIdAndUpdate(id,{$set:body},{new:true})
   .then(todo => {
     if(!todo) return res.status(404).send();
