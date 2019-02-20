@@ -104,7 +104,14 @@ describe('Delete /todos/:id',()=>{
     .delete(`/todos/${todos[0]._id}`)
     .expect(200)
     .expect(res => expect(res.body.text).toBe('walk the dog'))
-    .end(done);
+    .end((err,res)=>{
+      if(err) return done(err);//done(err) so the error gets rendered
+      Todo.findById(todos[0]._id.toHexString())
+      .then(docs => {
+        expect(docs).toBe(null);
+        done();
+      }).catch(err=>done(err));
+    });
   });
   it('Should return 404 status code if id is invalid',(done)=>{
     request(app)
