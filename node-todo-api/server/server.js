@@ -1,4 +1,6 @@
 //Todo rest API
+require('./config/config.js');
+
 const express    = require('express');
 const bodyParser = require('body-parser');
 const _          = require('lodash');
@@ -11,7 +13,7 @@ var {User} = require('./models/user');
 
 
 var app = express();
-var port = process.env.PORT || 3000;
+var port = process.env.PORT;
 
 // Middlewares configuration
 app.use(bodyParser.json());
